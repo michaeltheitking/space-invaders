@@ -1,0 +1,543 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #00ffff;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Menu Styles */
+.menu {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, #00ffff, transparent),
+    radial-gradient(2px 2px at 60% 70%, #00ffff, transparent),
+    radial-gradient(1px 1px at 50% 50%, #00ffff, transparent),
+    radial-gradient(1px 1px at 80% 10%, #00ffff, transparent);
+  background-size: 200% 200%;
+  animation: stars 20s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes stars {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+.menu-content {
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.game-title {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #00ff00;
+  text-shadow: 
+    0 0 10px #00ff00,
+    0 0 20px #00ff00,
+    0 0 30px #00ff00;
+  margin: 0 0 2rem 0;
+  letter-spacing: 0.2em;
+  animation: titlePulse 2s ease-in-out infinite;
+  text-align: center;
+  display: block;
+  width: 100%;
+  transform-origin: center center;
+  padding: 0;
+  box-sizing: border-box;
+  /* Compensate for letter-spacing visual offset */
+  margin-left: calc(0.1em * -1);
+}
+
+@keyframes titlePulse {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 
+      0 0 10px #00ff00,
+      0 0 20px #00ff00,
+      0 0 30px #00ff00;
+  }
+  50% {
+    transform: scale(1.05);
+    text-shadow: 
+      0 0 15px #00ff00,
+      0 0 30px #00ff00,
+      0 0 45px #00ff00;
+  }
+}
+
+.menu-info {
+  margin: 1.5rem 0;
+  font-size: 1.2rem;
+  color: #ffff00;
+}
+
+.controls-info {
+  margin: 2rem 0;
+  text-align: left;
+  display: inline-block;
+  background: rgba(0, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid #00ffff;
+}
+
+.controls-info h2 {
+  margin-bottom: 1rem;
+  color: #00ffff;
+  text-align: center;
+}
+
+.controls-info p {
+  margin: 0.5rem 0;
+  color: #ffffff;
+}
+
+.start-button {
+  margin: 2rem auto;
+  padding: 1rem 3rem;
+  font-size: 1.5rem;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #000000;
+  background: linear-gradient(135deg, #00ffff 0%, #0080ff 100%);
+  border: 2px solid #00ffff;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 
+    0 0 10px rgba(0, 255, 255, 0.5),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  display: block;
+  width: fit-content;
+}
+
+.start-button:hover {
+  background: linear-gradient(135deg, #00ffff 0%, #00ccff 100%);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.8),
+    inset 0 0 15px rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.start-button:active {
+  transform: scale(0.95);
+}
+
+/* Game Container */
+.game-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, #00ffff, transparent),
+    radial-gradient(1px 1px at 60% 70%, #00ffff, transparent),
+    radial-gradient(0.5px 0.5px at 50% 50%, #00ffff, transparent);
+  background-size: 200% 200%;
+  animation: stars 15s linear infinite;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.game-canvas {
+  position: relative;
+  background: #000011;
+  border: 2px solid #00ffff;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.5),
+    inset 0 0 20px rgba(0, 255, 255, 0.1);
+  z-index: 1;
+}
+
+/* Game UI */
+.game-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ui-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00ffff;
+  color: #00ffff;
+}
+
+.ui-bottom {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  font-size: 1.1rem;
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+.lives {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.life-icon {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 5px #00ffff);
+}
+
+.power-ups {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.power-up-indicator {
+  font-size: 1.5rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(0, 255, 255, 0.2);
+  border: 1px solid #00ffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  animation: powerUpPulse 1s ease-in-out infinite;
+}
+
+@keyframes powerUpPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* Pause Overlay */
+.pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  color: #00ffff;
+  font-size: 2rem;
+  text-shadow: 0 0 20px #00ffff;
+}
+
+.pause-content {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.pause-content h2 {
+  margin-bottom: 1rem;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.pause-content p {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.pause-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.pause-buttons button {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #000000;
+  background: linear-gradient(135deg, #00ffff 0%, #0080ff 100%);
+  border: 2px solid #00ffff;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 
+    0 0 10px rgba(0, 255, 255, 0.5),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.pause-buttons button:hover {
+  background: linear-gradient(135deg, #00ffff 0%, #00ccff 100%);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.8),
+    inset 0 0 15px rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.pause-buttons button:active {
+  transform: scale(0.95);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Explosion Animation */
+@keyframes explosionAnimation {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Game Over Overlay */
+.game-over-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  pointer-events: all;
+}
+
+.game-over-content {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  padding: 3rem;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  max-width: 500px;
+}
+
+.game-over-content h1 {
+  font-size: 3rem;
+  color: #ff0000;
+  text-shadow: 
+    0 0 10px #ff0000,
+    0 0 20px #ff0000;
+  margin-bottom: 2rem;
+  animation: gameOverPulse 1s ease-in-out infinite;
+}
+
+@keyframes gameOverPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.final-stats {
+  margin: 2rem 0;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.final-stats p {
+  margin: 0.5rem 0;
+}
+
+.new-high-score {
+  color: #ffff00;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 
+    0 0 10px #ffff00,
+    0 0 20px #ffff00;
+  animation: highScoreFlash 0.5s ease-in-out infinite;
+}
+
+@keyframes highScoreFlash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.game-over-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.game-over-buttons button {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #000000;
+  background: linear-gradient(135deg, #00ffff 0%, #0080ff 100%);
+  border: 2px solid #00ffff;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 
+    0 0 10px rgba(0, 255, 255, 0.5),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.game-over-buttons button:hover {
+  background: linear-gradient(135deg, #00ffff 0%, #00ccff 100%);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.8),
+    inset 0 0 15px rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.game-over-buttons button:active {
+  transform: scale(0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .game-title {
+    font-size: 2.5rem;
+  }
+  
+  .game-canvas {
+    transform: scale(0.8);
+  }
+  
+  .ui-top {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .ui-bottom {
+    font-size: 0.9rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .game-title {
+    font-size: 2rem;
+  }
+  
+  .game-canvas {
+    transform: scale(0.6);
+  }
+  
+  .menu-content {
+    padding: 1rem;
+  }
+  
+  .controls-info {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Shield Animation */
+@keyframes shieldPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
